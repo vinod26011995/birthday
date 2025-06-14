@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday</title>
+  <title>Happy Birthday Hardi</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -34,13 +34,6 @@
     .background-container img.active {
       opacity: 1;
       z-index: 0;
-    }
-
-    @media (max-width: 600px) {
-      .background-container img {
-        object-fit: contain;
-        background-color: #000;
-      }
     }
 
     .step-screen {
@@ -165,30 +158,30 @@
 </head>
 <body>
 
-  <!-- Background Image Slider -->
+  <!-- Background Images -->
   <div class="background-container">
     <img src="rhl.jpeg" class="active" />
     <img src="rhl1.jpeg" />
     <img src="rhl2.jpeg" />
   </div>
 
-  <!-- Step 1: Intro Button -->
+  <!-- Step 1 -->
   <div id="step1" class="step-screen" style="z-index: 11;">
-    <button class="next-btn">🚪 Start the Journey</button>
+    <button class="next-btn">👋 Hey Hardi, shall we begin?</button>
   </div>
 
-  <!-- Step 2: Thriller Message -->
+  <!-- Step 2 -->
   <div id="step2" class="step-screen" style="display: none; z-index: 11;">
-    <p style="font-size: 5vw; color: white;">🎁 A surprise awaits... Are you ready?</p>
-    <button class="next-btn">👀 Reveal Surprise</button>
+    <p style="font-size: 5vw; color: white;">🎁 Hardi, a surprise awaits... ready?</p>
+    <button class="next-btn">😲 Yes! Show me what's next</button>
   </div>
 
-  <!-- Step 3: Celebration Start Button -->
+  <!-- Step 3 -->
   <div id="step3" class="step-screen" style="display: none; z-index: 11;">
-    <button id="startBtn">🎉 Click Here to Celebrate 🎉</button>
+    <button id="startBtn" class="next-btn">🎉 Let's Celebrate, Hardi 🎉</button>
   </div>
 
-  <!-- Content -->
+  <!-- Main Content -->
   <div class="content" id="mainContent">
     <h1>🎉 Happy Birthday Hardi 🎂</h1>
     <p>Wishing you lots of joy, success, and love on your special day! 🥳</p>
@@ -197,7 +190,7 @@
     </blockquote>
   </div>
 
-  <!-- Audio Files -->
+  <!-- Audio -->
   <audio id="bgMusic" preload="auto" loop>
     <source src="happy-birthday-155461.mp3" type="audio/mp3">
   </audio>
