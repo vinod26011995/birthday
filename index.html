@@ -5,52 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body, html {
       height: 100%;
       overflow: hidden;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000;
+      position: relative;
     }
 
     .background-container {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: 0;
     }
 
-    /* .background-container img {
+    .background-container img {
       position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0;
       transition: opacity 2s ease-in-out;
-    } */
-
-    .background-container img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 2s ease-in-out;
-}
-
-@media (max-width: 600px) {
-  .background-container img {
-    object-fit: contain; /* Mobile: show full image */
-    background-color: #000; /* Optional: black bg behind image */
-  }
-}
-
+    }
 
     .background-container img.active {
       opacity: 1;
@@ -64,18 +43,45 @@
       text-align: center;
       padding: 10vh 5vw;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+      display: none;
     }
 
-    h1 {
-      font-size: 8vw;
-      animation: pop 1s ease-in-out infinite alternate;
+   /* ==== SMALLER TEXT SIZES ==== */
+h1 {
+  font-size: 7vw;           /* पहले 10vw था   */
+}
+
+p {
+  font-size: 4vw;           /* पहले 4.5vw था  */
+}
+
+blockquote {
+  font-size: 3.6vw;         /* पहले 4vw था    */
+}
+
+/* Desktop break‑point पर भी थोड़ा घटाया */
+@media (min-width: 768px) {
+  h1 { font-size: 48px; }   /* पहले 60px था   */
+  p  { font-size: 22px; }   /* पहले 24px था   */
+  blockquote { font-size: 18px; } /* पहले 20px */
+}
+
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px #ff00cc; }
+      100% { text-shadow: 0 0 20px #3333ff; }
     }
 
-    p {
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* p {
       font-size: 4.5vw;
       margin-top: 10px;
       animation: fadeIn 2s ease-in;
-    }
+    } */
 
     blockquote {
       font-style: italic;
@@ -84,17 +90,6 @@
       max-width: 90%;
       margin-inline: auto;
       animation: fadeIn 3s ease-in;
-    }
-
-    @media (min-width: 768px) {
-      h1 { font-size: 50px; }
-      p { font-size: 24px; }
-      blockquote { font-size: 20px; max-width: 600px; }
-    }
-
-    @keyframes pop {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
     }
 
     @keyframes fadeIn {
@@ -110,6 +105,7 @@
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       animation: float 6s ease-in-out infinite;
       z-index: 1;
+      cursor: pointer;
     }
 
     .balloon::after {
@@ -128,12 +124,6 @@
       50% { transform: translateY(-400px) translateX(30px) rotate(10deg); }
       100% { transform: translateY(0) translateX(0) rotate(0deg); }
     }
-
-    .balloon:nth-child(1) { left: 10%; background-color: #ff6f91; animation-delay: 0s; }
-    .balloon:nth-child(2) { left: 30%; background-color: #ffc75f; animation-delay: 1s; }
-    .balloon:nth-child(3) { left: 50%; background-color: #f9f871; animation-delay: 2s; }
-    .balloon:nth-child(4) { left: 70%; background-color: #845ec2; animation-delay: 3s; }
-    .balloon:nth-child(5) { left: 90%; background-color: #00c9a7; animation-delay: 4s; }
 
     .confetti {
       position: absolute;
@@ -156,9 +146,32 @@
       left: calc(100% * var(--i));
       animation-delay: calc(-5s * var(--i));
     }
+
+    #startBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px 40px;
+      font-size: 24px;
+      background: linear-gradient(to right, #ff6f91, #845ec2);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 10;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
   </style>
 </head>
 <body>
+
   <!-- Background Image Slider -->
   <div class="background-container">
     <img src="rhl.jpeg" class="active" />
@@ -166,40 +179,80 @@
     <img src="rhl2.jpeg" />
   </div>
 
+  <!-- Start Button -->
+  <button id="startBtn">🎉 Click Here to Celebrate 🎉</button>
+
   <!-- Content -->
-  <div class="content">
-    <h1>🎉 Happy Birthday! Hardi 🎂</h1>
+  <div class="content" id="mainContent">
+    <h1>🎉 Happy Birthday Hardi 🎂</h1>
     <p>Wishing you lots of joy, success, and love on your special day! 🥳</p>
     <blockquote>
-      "Count your life by smiles, not tears. Count your age by friends, not years. Wishing you a day filled with love, laughter, and unforgettable memories. Happy Birthday!"
+      "Count your life by smiles, not tears. Count your age by friends, not years. Wishing you a day filled with love, laughter, and unforgettable memories."
     </blockquote>
   </div>
 
-  <!-- Balloons -->
-  <div class="balloon"></div>
-  <div class="balloon"></div>
-  <div class="balloon"></div>
-  <div class="balloon"></div>
-  <div class="balloon"></div>
+  <!-- Audio Files -->
+  <audio id="bgMusic" preload="auto" loop>
+    <source src="happy-birthday-155461.mp3" type="audio/mp3">
+  </audio>
+  <audio id="popSound" preload="auto">
+    <source src="happy-birthday-155461.mp3" type="audio/mp3">
+  </audio>
 
-  <!-- Confetti -->
   <script>
-    for (let i = 0; i < 30; i++) {
-      const span = document.createElement('span');
-      span.classList.add('confetti');
-      span.style.setProperty('--i', Math.random());
-      document.body.appendChild(span);
-    }
+    const startBtn = document.getElementById('startBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    const popSound = document.getElementById('popSound');
+    const content = document.getElementById('mainContent');
 
-    // Background slider
-    const slides = document.querySelectorAll('.background-container img');
-    let current = 0;
+    startBtn.addEventListener('click', () => {
+      // Start music
+      bgMusic.play();
 
-    setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 6000); // Change every 6 seconds
+      // Show content
+      content.style.display = 'block';
+
+      // Hide button
+      startBtn.style.display = 'none';
+
+      // Start background slideshow
+      const slides = document.querySelectorAll('.background-container img');
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 6000);
+
+      // Add confetti
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement('span');
+        span.classList.add('confetti');
+        span.style.setProperty('--i', Math.random());
+        document.body.appendChild(span);
+      }
+
+      // Add balloons
+      const colors = ['#ff6f91', '#ffc75f', '#f9f871', '#845ec2', '#00c9a7'];
+      colors.forEach((color, i) => {
+        const b = document.createElement('div');
+        b.className = 'balloon';
+        b.style.left = `${10 + i * 18}%`;
+        b.style.backgroundColor = color;
+        b.style.animationDelay = `${i}s`;
+
+        b.addEventListener('click', () => {
+          popSound.currentTime = 0;
+          popSound.play();
+          b.style.animation = 'none';
+          b.style.transform = 'scale(0)';
+          b.style.opacity = '0';
+          setTimeout(() => b.remove(), 400);
+        });
+
+        document.body.appendChild(b);
+      });
+    });
   </script>
 </body>
 </html>
