@@ -22,26 +22,50 @@
       z-index: 0;
     }
 
-   .background-container img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 2s ease-in-out;
-}
-
-@media (max-width: 600px) {
-  .background-container img {
-    object-fit: contain;
-    background-color: #000;
-  }
-}
-
+    .background-container img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
 
     .background-container img.active {
       opacity: 1;
       z-index: 0;
+    }
+
+    @media (max-width: 600px) {
+      .background-container img {
+        object-fit: contain;
+        background-color: #000;
+      }
+    }
+
+    .step-screen {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    .next-btn {
+      padding: 18px 36px;
+      font-size: 20px;
+      color: white;
+      background: linear-gradient(to right, #ff6f91, #845ec2);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      margin-top: 20px;
     }
 
     .content {
@@ -54,55 +78,38 @@
       display: none;
     }
 
-   /* ==== SMALLER TEXT SIZES ==== */
-h1 {
-  font-size: 7vw;           /* पहले 10vw था   */
-}
-
-p {
-  font-size: 4vw;           /* पहले 4.5vw था  */
-}
-
-blockquote {
-  font-size: 3.6vw;         /* पहले 4vw था    */
-}
-
-/* Desktop break‑point पर भी थोड़ा घटाया */
-@media (min-width: 768px) {
-  h1 { font-size: 48px; }   /* पहले 60px था   */
-  p  { font-size: 22px; }   /* पहले 24px था   */
-  blockquote { font-size: 18px; } /* पहले 20px */
-}
-
-
-    @keyframes glow {
-      0% { text-shadow: 0 0 10px #ff00cc; }
-      100% { text-shadow: 0 0 20px #3333ff; }
+    h1 {
+      font-size: 7vw;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    p {
+      font-size: 4vw;
     }
-
-    /* p {
-      font-size: 4.5vw;
-      margin-top: 10px;
-      animation: fadeIn 2s ease-in;
-    } */
 
     blockquote {
       font-style: italic;
-      font-size: 4vw;
+      font-size: 3.6vw;
       margin-top: 30px;
       max-width: 90%;
       margin-inline: auto;
       animation: fadeIn 3s ease-in;
     }
 
+    @media (min-width: 768px) {
+      h1 { font-size: 48px; }
+      p  { font-size: 22px; }
+      blockquote { font-size: 18px; }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     .balloon {
@@ -154,28 +161,6 @@ blockquote {
       left: calc(100% * var(--i));
       animation-delay: calc(-5s * var(--i));
     }
-
-    #startBtn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px 40px;
-      font-size: 24px;
-      background: linear-gradient(to right, #ff6f91, #845ec2);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      z-index: 10;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
-      100% { transform: translate(-50%, -50%) scale(1); }
-    }
   </style>
 </head>
 <body>
@@ -187,8 +172,21 @@ blockquote {
     <img src="rhl2.jpeg" />
   </div>
 
-  <!-- Start Button -->
-  <button id="startBtn">🎉 Click Here to Celebrate 🎉</button>
+  <!-- Step 1: Intro Button -->
+  <div id="step1" class="step-screen" style="z-index: 11;">
+    <button class="next-btn">🚪 Start the Journey</button>
+  </div>
+
+  <!-- Step 2: Thriller Message -->
+  <div id="step2" class="step-screen" style="display: none; z-index: 11;">
+    <p style="font-size: 5vw; color: white;">🎁 A surprise awaits... Are you ready?</p>
+    <button class="next-btn">👀 Reveal Surprise</button>
+  </div>
+
+  <!-- Step 3: Celebration Start Button -->
+  <div id="step3" class="step-screen" style="display: none; z-index: 11;">
+    <button id="startBtn">🎉 Click Here to Celebrate 🎉</button>
+  </div>
 
   <!-- Content -->
   <div class="content" id="mainContent">
@@ -208,22 +206,27 @@ blockquote {
   </audio>
 
   <script>
+    const steps = ['step1', 'step2', 'step3'];
+    let currentStep = 0;
+
+    document.querySelectorAll('.next-btn').forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        document.getElementById(steps[currentStep]).style.display = 'none';
+        currentStep++;
+        document.getElementById(steps[currentStep]).style.display = 'flex';
+      });
+    });
+
     const startBtn = document.getElementById('startBtn');
     const bgMusic = document.getElementById('bgMusic');
     const popSound = document.getElementById('popSound');
     const content = document.getElementById('mainContent');
 
     startBtn.addEventListener('click', () => {
-      // Start music
       bgMusic.play();
-
-      // Show content
       content.style.display = 'block';
+      document.getElementById('step3').style.display = 'none';
 
-      // Hide button
-      startBtn.style.display = 'none';
-
-      // Start background slideshow
       const slides = document.querySelectorAll('.background-container img');
       let current = 0;
       setInterval(() => {
@@ -232,7 +235,6 @@ blockquote {
         slides[current].classList.add('active');
       }, 6000);
 
-      // Add confetti
       for (let i = 0; i < 30; i++) {
         const span = document.createElement('span');
         span.classList.add('confetti');
@@ -240,7 +242,6 @@ blockquote {
         document.body.appendChild(span);
       }
 
-      // Add balloons
       const colors = ['#ff6f91', '#ffc75f', '#f9f871', '#845ec2', '#00c9a7'];
       colors.forEach((color, i) => {
         const b = document.createElement('div');
