@@ -5,51 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to top right, #ff9a9e, #fad0c4);
-      height: 100vh;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .background-container img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .background-container img.active {
+      opacity: 1;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      text-align: center;
+      padding: 50px 20px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
     }
 
     h1 {
       font-size: 60px;
-      color: #fff;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
       animation: pop 1s ease-in-out infinite alternate;
     }
 
     p {
       font-size: 24px;
-      color: #fff;
-      margin-top: 20px;
+      margin-top: 10px;
       animation: fadeIn 2s ease-in;
     }
 
+    blockquote {
+      font-style: italic;
+      font-size: 20px;
+      margin-top: 30px;
+      max-width: 600px;
+      margin-inline: auto;
+      animation: fadeIn 3s ease-in;
+    }
+
     @keyframes pop {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.05);
-      }
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .balloon {
@@ -57,10 +84,9 @@
       bottom: -150px;
       width: 60px;
       height: 80px;
-      background-color: #ff6f91;
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       animation: float 6s ease-in-out infinite;
-      z-index: 0;
+      z-index: 1;
     }
 
     .balloon::after {
@@ -75,51 +101,56 @@
     }
 
     @keyframes float {
-      0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-400px) translateX(30px) rotate(10deg);
-      }
-      100% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-      }
+      0% { transform: translateY(0) translateX(0) rotate(0deg); }
+      50% { transform: translateY(-400px) translateX(30px) rotate(10deg); }
+      100% { transform: translateY(0) translateX(0) rotate(0deg); }
     }
 
-    .balloon:nth-child(1) {
-      left: 10%;
-      background-color: #ff6f91;
-      animation-delay: 0s;
+    .balloon:nth-child(1) { left: 10%; background-color: #ff6f91; animation-delay: 0s; }
+    .balloon:nth-child(2) { left: 30%; background-color: #ffc75f; animation-delay: 1s; }
+    .balloon:nth-child(3) { left: 50%; background-color: #f9f871; animation-delay: 2s; }
+    .balloon:nth-child(4) { left: 70%; background-color: #845ec2; animation-delay: 3s; }
+    .balloon:nth-child(5) { left: 90%; background-color: #00c9a7; animation-delay: 4s; }
+
+    .confetti {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: #fff;
+      top: -10px;
+      animation: confetti-fall 5s linear infinite;
+      opacity: 0.7;
+      border-radius: 50%;
+      z-index: 1;
     }
 
-    .balloon:nth-child(2) {
-      left: 30%;
-      background-color: #ffc75f;
-      animation-delay: 1s;
+    @keyframes confetti-fall {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(100vh) rotate(360deg); }
     }
 
-    .balloon:nth-child(3) {
-      left: 50%;
-      background-color: #f9f871;
-      animation-delay: 2s;
-    }
-
-    .balloon:nth-child(4) {
-      left: 70%;
-      background-color: #845ec2;
-      animation-delay: 3s;
-    }
-
-    .balloon:nth-child(5) {
-      left: 90%;
-      background-color: #00c9a7;
-      animation-delay: 4s;
+    .confetti:nth-child(n+6):nth-child(-n+35) {
+      left: calc(100% * var(--i));
+      animation-delay: calc(-5s * var(--i));
     }
   </style>
 </head>
 <body>
-  <h1>🎉 Happy Birthday! 🎂</h1>
-  <p>Wishing you lots of joy, success, and love on your special day! 🥳</p>
+  <!-- Background Image Slider -->
+  <div class="background-container">
+    <img src="rhl.jpeg" class="active" />
+    <img src="rhl1.jpeg" />
+    <img src="rhl2.jpeg" />
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>🎉 Happy Birthday! Hardi 🎂</h1>
+    <p>Wishing you lots of joy, success, and love on your special day! 🥳</p>
+    <blockquote>
+      "Count your life by smiles, not tears. Count your age by friends, not years. Wishing you a day filled with love, laughter, and unforgettable memories. Happy Birthday!"
+    </blockquote>
+  </div>
 
   <!-- Balloons -->
   <div class="balloon"></div>
@@ -127,5 +158,25 @@
   <div class="balloon"></div>
   <div class="balloon"></div>
   <div class="balloon"></div>
+
+  <!-- Confetti -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const span = document.createElement('span');
+      span.classList.add('confetti');
+      span.style.setProperty('--i', Math.random());
+      document.body.appendChild(span);
+    }
+
+    // Background slider
+    const slides = document.querySelectorAll('.background-container img');
+    let current = 0;
+
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 6000); // Change every 6 seconds
+  </script>
 </body>
 </html>
