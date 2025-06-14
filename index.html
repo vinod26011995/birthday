@@ -45,28 +45,34 @@
       z-index: 2;
       color: #fff;
       text-align: center;
-      padding: 50px 20px;
+      padding: 10vh 5vw;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
     }
 
     h1 {
-      font-size: 60px;
+      font-size: 8vw;
       animation: pop 1s ease-in-out infinite alternate;
     }
 
     p {
-      font-size: 24px;
+      font-size: 4.5vw;
       margin-top: 10px;
       animation: fadeIn 2s ease-in;
     }
 
     blockquote {
       font-style: italic;
-      font-size: 20px;
+      font-size: 4vw;
       margin-top: 30px;
-      max-width: 600px;
+      max-width: 90%;
       margin-inline: auto;
       animation: fadeIn 3s ease-in;
+    }
+
+    @media (min-width: 768px) {
+      h1 { font-size: 50px; }
+      p { font-size: 24px; }
+      blockquote { font-size: 20px; max-width: 600px; }
     }
 
     @keyframes pop {
@@ -82,8 +88,8 @@
     .balloon {
       position: absolute;
       bottom: -150px;
-      width: 60px;
-      height: 80px;
+      width: 40px;
+      height: 60px;
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       animation: float 6s ease-in-out infinite;
       z-index: 1;
